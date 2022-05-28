@@ -12,6 +12,8 @@ Sign-in dialog for NextAuth built with MUI and React. Detects configured OAuth a
 
 ```console
 npm install next-auth-mui
+
+yarn add next-auth-mui
 ```
 ❗Note: [NextAuth](https://github.com/nextauthjs/next-auth) needs to be configured and [MUI](https://github.com/mui/material-ui) has to be installed in your project.
 
