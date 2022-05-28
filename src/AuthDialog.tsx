@@ -40,40 +40,36 @@ export type OauthProviderConfig = {
    */
   ButtonTypographyProps?: TypographyProps
   /**
-   * Override the provider's name when rendering the button.
+   * Override props passed to provider's icon. See @iconify/react documentation.
    */
-  label?: string;
-  /**
-   * Hide the provider names button.
-   */
-  hideProviderName?: boolean;
+  IconProps?: IconProps;
   /**
    * Hide the provider icon on button.
    */
   hideProviderIcon?: boolean;
   /**
-   * Override props passed to provider's icon. See @iconify/react documentation.
+   * Hide the provider names button.
    */
-  IconProps?: IconProps;
+  hideProviderName?: boolean;
   /**
    * Override the provider's icon. Can be a @iconify/react icon name or a custom component.
    */
   icon?: string | React.ReactNode;
+  /**
+   * Override the provider's name when rendering the button.
+   */
+  label?: string;
 }
 
 export type EmailProviderConfig = {
   /**
-   * Override start icon rendered in the email input field
+   * Override props passed to the email's input field. See @mui/material documentation.
    */
-  startIcon?: React.ReactNode;
+  TextFieldProps?: TextFieldProps,
   /**
    * Override end icon rendered in the email input field
    */
   endIcon?: React.ReactNode;
-  /**
-   * Override props passed to the email's input field. See @mui/material documentation.
-   */
-  TextFieldProps?: TextFieldProps
   /**
    * Override text rendered below the email input field.
    */
@@ -82,6 +78,10 @@ export type EmailProviderConfig = {
    * Override the placeholder text rendered in the email input field.
    */
   placeholder?: string;
+  /**
+   * Override start icon rendered in the email input field
+   */
+  startIcon?: React.ReactNode;
 }
 
 export type ProviderConfig = OauthProviderConfig & EmailProviderConfig & {
@@ -94,35 +94,25 @@ export type ProviderConfig = OauthProviderConfig & EmailProviderConfig & {
    */
   name: string;
   /**
+   * Override sign in options to be passed when calling `signIn`.  See next-auth for documentation
+   */
+  signInOptions?: SignInOptions;
+  /**
    * Type of the provider.
    * Only `email` and `oauth` are supported, all other types will be ignored when rendering fields.
    */
   type: 'oauth' | 'email' | string;
-  /**
-   * Override sign in options to be passed when calling `signIn`.  See next-auth for documentation
-   */
-  signInOptions?: SignInOptions;
 };
 
 export type AuthDialogProps = PropsWithChildren<{
   /**
-   * Controls width of dialog.
-   * When breakpoint >= viewport the dialog will be rendered in mobile mode.
-   * Defaults to `xs`.
+   * See @mui/material documentation
    */
-  breakpoint?: Breakpoint
-  /**
-   * When true the dialog will be open.
-   */
-  open: boolean
-  /**
-   * Callback for closing the dialog.
-   */
-  onClose?: () => void;
+  ButtonProps?: ButtonProps,
   /**
    * See @mui/material documentation
    */
-  DialogContentTextProps?: DialogContentTextProps
+  ButtonTypographyProps?: TypographyProps,
   /**
    * See @mui/material documentation
    */
@@ -130,7 +120,7 @@ export type AuthDialogProps = PropsWithChildren<{
   /**
    * See @mui/material documentation
    */
-  DialogTitleProps?: DialogTitleProps;
+  DialogContentTextProps?: DialogContentTextProps
   /**
    * See @mui/material documentation
    */
@@ -138,72 +128,82 @@ export type AuthDialogProps = PropsWithChildren<{
   /**
    * See @mui/material documentation
    */
-  ButtonProps?: ButtonProps
-  /**
-   * An object mapping of provider id to provider config.
-   */
-  providers?: Record<string, ProviderConfig>;
-  /**
-   * Hide the dialog title. In mobile mode this will hide the close "x" icon.
-   */
-  hideTitle?: boolean;
-  /**
-   * Text to display in the dialog title. Empty by default.
-   */
-  titleText?: string | React.ReactNode;
-  /**
-   * Text to display between email field and oauth buttons. Defaults to "or".
-   */
-  dividerText?: string | React.ReactNode;
-  /**
-   * If true a loading indicator will be displayed in the dialog.
-   */
-  loading?: boolean;
-  /**
-   * A custom loading indicator.
-   */
-  Progress?: React.ReactNode;
+  DialogTitleProps?: DialogTitleProps;
   /**
    * Props to pass to the default loading indicator. See @mui/material documentation
    */
   LinearProgressProps?: LinearProgressProps;
   /**
-   * See @mui/material documentation
+   * A custom loading indicator.
    */
-  ButtonTypographyProps?: TypographyProps
-  /**
-   * Callback runs on a successful sign in.
-   */
-  onOAuthSignInSuccess?: (response: SignInResponse | undefined) => void;
-  /**
-   * Callback runs on a failed sign in.
-   */
-  onOAuthSignInError?: (error: Error) => void;
+  Progress?: React.ReactNode;
   /**
    * Props passed to the email input field. See @mui/material documentation
    */
   TextFieldProps?: TextFieldProps;
   /**
+   * Controls width of dialog.
+   * When breakpoint >= viewport the dialog will be rendered in mobile mode.
+   * Defaults to `xs`.
+   */
+  breakpoint?: Breakpoint,
+  /**
+   * Text to display between email field and oauth buttons. Defaults to "or".
+   */
+  dividerText?: string | React.ReactNode;
+  /**
+   * Hide the provider icons on their buttons.
+   */
+  hideProviderIcon?: boolean;
+  /**
+   * Hide the provider names on their buttons.
+   */
+  hideProviderName?: boolean;
+  /**
+   * Hide the dialog title. In mobile mode this will hide the close "x" icon.
+   */
+  hideTitle?: boolean;
+  /**
    * Custom email validation function.
    */
   isValidEmail?: (email: string) => boolean;
+  /**
+   * If true a loading indicator will be displayed in the dialog.
+   */
+  loading?: boolean;
+  /**
+   * Callback for closing the dialog.
+   */
+  onClose?: () => void;
+  /**
+   * Callback runs on a failed sign in.
+   */
+  onOAuthSignInError?: (error: Error) => void;
+  /**
+   * Callback runs on a successful sign in.
+   */
+  onOAuthSignInSuccess?: (response: SignInResponse | undefined) => void;
   /**
    * Override default email submission function.
    * This is useful for implementing authentication with a 3rd party API like MagicLink.
    */
   onSubmitEmail?: (email: string) => Promise<void>;
   /**
+   * When true the dialog will be open.
+   */
+  open: boolean,
+  /**
+   * An object mapping of provider id to provider config.
+   */
+  providers?: Record<string, ProviderConfig>;
+  /**
    * Additional sign in options to be passed when calling `signIn`.  See next-auth for documentation
    */
   signInOptions?: SignInOptions;
   /**
-   * Hide the provider names on their buttons.
+   * Text to display in the dialog title. Empty by default.
    */
-  hideProviderName?: boolean;
-  /**
-   * Hide the provider icons on their buttons.
-   */
-  hideProviderIcon?: boolean;
+  titleText?: string | React.ReactNode;
 }>
 
 export function isValidEmail(email: string) {

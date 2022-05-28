@@ -7,13 +7,13 @@ import {
 
 export type NextAuthDialogProps = AuthDialogProps & {
   /**
-   * The endpoint of NextAuth server. Defaults to `/api/auth/providers`.
-   */
-  url?: string;
-  /**
    * Disable sorting of providers by name when rendering their buttons.
    */
   disableSortByName?: boolean;
+  /**
+   * The endpoint of NextAuth server. Defaults to `/api/auth/providers`.
+   */
+  url?: string;
 }
 
 export function NextAuthDialog(props: NextAuthDialogProps) {
