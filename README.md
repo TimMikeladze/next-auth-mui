@@ -86,7 +86,7 @@ export type NextAuthDialogProps = AuthDialogProps & {
 export type AuthDialogProps = PropsWithChildren<{
   /**
    * Controls width of dialog.
-   * When breakpoint <= viewport the dialog will be rendered in mobile mode.
+   * When breakpoint >= viewport the dialog will be rendered in mobile mode.
    * Defaults to `xs`.
    */
   breakpoint?: Breakpoint
