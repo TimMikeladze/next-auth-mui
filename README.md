@@ -13,15 +13,14 @@ Sign-in dialog for NextAuth built with MUI and React. Detects configured OAuth a
 ```console
 npm install next-auth-mui
 ```
-❗Note: [NextAuth](https://github.com/nextauthjs/next-auth) needs at least one provider configured and [MUI](https://github.com/mui/material-ui) needs to be installed in your project.
+❗Note: [NextAuth](https://github.com/nextauthjs/next-auth) needs to be configured and [MUI](https://github.com/mui/material-ui) has to be installed in your project.
 
 
 ### Usage
 
-Simply render the `<NextAuthDialog />` component in your app. The component will automatically detect the configured providers by sending a request to the `/api/auth/providers` endpoint and render the appropriate sign-in buttons or input fields.
+Simply render the `<NextAuthDialog />` component in your app. This component will automatically detect the configured providers by sending a request to the `/api/auth/providers` endpoint and render the appropriate sign-in buttons or input fields.
 
 ```tsx
-
 import React from 'react';
 import { Button } from '@mui/material';
 import NextAuthDialog from 'next-auth-mui';
@@ -44,7 +43,7 @@ const Example = () => {
 
 Components rendered within the `next-auth-mui` dialog are customizable through passing the standard props supported by the respective `@mui/material` components.
 
-If you need to implement custom logic for fetching providers or want complete control over the sign-in dialog, you can import the `AuthDialog` component.
+If you need to implement custom logic for fetching providers or want complete control over the sign-in dialog, you can also import the `AuthDialog` component.
 
 ```tsx
 import { AuthDialog } from 'next-auth-mui';
