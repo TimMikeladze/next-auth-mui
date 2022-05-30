@@ -41,9 +41,6 @@ export const Default = Template.bind({});
 
 Default.args = {
   open: true,
-  DialogContentProps: {
-    children: 'foo',
-  },
 };
 
 Default.parameters = {

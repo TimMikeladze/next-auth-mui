@@ -3,6 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import withMock from 'storybook-addon-mock';
 
 import { TextField, Typography } from '@mui/material';
+import { action } from '@storybook/addon-actions';
 import { NextAuthDialog } from '..';
 import {
   allProviders, defaultProviders, emailProvider, getMockResponse, oauthProviders,
@@ -95,6 +96,28 @@ Error.parameters = {
     status: 500,
     response: null,
   }],
+};
+
+export const CustomEmailSubmit = Template.bind({});
+
+CustomEmailSubmit.args = {
+  open: true,
+  alwaysShowEmailField: true,
+  EmailFieldProps: {
+    helperText: 'A custom function will run when email is submitted',
+  },
+  onSubmitEmail: async (email) => {
+    await new Promise((resolve) => {
+      setTimeout(resolve, 3000);
+    });
+    action('onSubmitEmail')(email);
+  },
+};
+
+CustomEmailSubmit.parameters = {
+  mockData: [
+    getMockResponse({}),
+  ],
 };
 
 export const AllProviders = Template.bind({});

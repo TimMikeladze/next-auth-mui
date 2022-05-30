@@ -47,26 +47,33 @@ Components rendered within the `next-auth-mui` dialog are customizable through p
 
 If you need to implement custom logic for fetching providers or want complete control over the sign-in dialog, you can also import the `AuthDialog` component.
 
+
 ```tsx
 import { AuthDialog } from 'next-auth-mui';
 ```
 
-Below is a simple customization to change the way buttons appear globally, provide a custom label to the Google sign-in button and render a custom input field.
+### Custom email authentication
+
+A common use-case is using a 3rd party email authentication service to send magic links alongside NextAuth's OAuth providers. In this case you can implement a custom email submit handler.
+
+In the example below we're using [magic.link](https://magic.link/) to send emails and a custom credentials provider to authenticate the user.
 
 ```tsx
 <NextAuthDialog
   open
-  ButtonProps={{
-    color: 'secondary',
+  {/* Render email field even if there is no email provider configured */}
+  alwaysShowEmailField
+  onSubmitEmail={async (email) => {
+    // Send magic link
+    const didToken = await magic.auth.loginWithMagicLink({ email });
+
+    // sign in with NextAuth
+    await signIn(`credentials`, {
+      didToken,
+      callbackUrl: router.query[`callbackUrl`]
+    });
   }}
-  providers={{
-    google: {
-      label: 'Sign-in with Google',
-    },
-  }}
->
-  <TextField label="custom input" />
-</NextAuthDialog>
+/>
 ```
 
 ## All options
@@ -109,6 +116,10 @@ export type AuthDialogProps = PropsWithChildren<{
    */
   DialogTitleProps?: DialogTitleProps;
   /**
+   * Props passed to the email input field. See @mui/material documentation
+   */
+  EmailFieldProps?: TextFieldProps;
+  /**
    * Props to pass to the default loading indicator. See @mui/material documentation
    */
   LinearProgressProps?: LinearProgressProps;
@@ -117,9 +128,10 @@ export type AuthDialogProps = PropsWithChildren<{
    */
   Progress?: React.ReactNode;
   /**
-   * Props passed to the email input field. See @mui/material documentation
+   * Always show the email field regardless if email provider has been configured.
+   * This is useful for implementing email auth with a 3rd party api.
    */
-  TextFieldProps?: TextFieldProps;
+  alwaysShowEmailField?: boolean;
   /**
    * Controls width of dialog.
    * When breakpoint >= viewport the dialog will be rendered in mobile mode.
@@ -224,7 +236,7 @@ export type EmailProviderConfig = {
   /**
    * Override props passed to the email's input field. See @mui/material documentation.
    */
-  TextFieldProps?: TextFieldProps,
+  EmailFieldProps?: TextFieldProps,
   /**
    * Override end icon rendered in the email input field
    */

@@ -4,7 +4,6 @@ import {
   Breakpoint,
   Button,
   ButtonProps,
-  CircularProgress,
   Dialog,
   DialogContent,
   DialogContentProps,
@@ -18,7 +17,6 @@ import {
   LinearProgress,
   LinearProgressProps,
   Stack,
-  TextField,
   TextFieldProps,
   Typography,
   TypographyProps,
@@ -29,6 +27,7 @@ import { Icon, IconProps } from '@iconify/react';
 import { signIn } from 'next-auth/react';
 import { SignInOptions, SignInResponse } from 'next-auth/react/types';
 import { icons } from './icons';
+import { EmailField } from './EmailField';
 
 export type OauthProviderConfig = {
   /**
@@ -65,7 +64,7 @@ export type EmailProviderConfig = {
   /**
    * Override props passed to the email's input field. See @mui/material documentation.
    */
-  TextFieldProps?: TextFieldProps,
+  EmailFieldProps?: TextFieldProps,
   /**
    * Override end icon rendered in the email input field
    */
@@ -130,6 +129,10 @@ export type AuthDialogProps = PropsWithChildren<{
    */
   DialogTitleProps?: DialogTitleProps;
   /**
+   * Props passed to the email input field. See @mui/material documentation
+   */
+  EmailFieldProps?: TextFieldProps;
+  /**
    * Props to pass to the default loading indicator. See @mui/material documentation
    */
   LinearProgressProps?: LinearProgressProps;
@@ -138,9 +141,10 @@ export type AuthDialogProps = PropsWithChildren<{
    */
   Progress?: React.ReactNode;
   /**
-   * Props passed to the email input field. See @mui/material documentation
+   * Always show the email field regardless if email provider has been configured.
+   * This is useful for implementing email auth with a 3rd party api.
    */
-  TextFieldProps?: TextFieldProps;
+  alwaysShowEmailField?: boolean;
   /**
    * Controls width of dialog.
    * When breakpoint >= viewport the dialog will be rendered in mobile mode.
@@ -301,44 +305,18 @@ export function AuthDialog(props: AuthDialogProps) {
             </DialogContentText>
             <Stack spacing={2}>
               {props.children}
-              {emailProviderConfig && (
-                <TextField
-                  required
-                  fullWidth
-                  type="email"
-                  autoFocus
-                  value={email}
-                  onChange={(e) => handleChangeEmail(e)}
-                  onKeyDown={async (e) => {
-                    if (e.key === 'Enter' && validEmail) {
-                      await handleSubmitEmail();
-                    }
+              {(emailProviderConfig || props.alwaysShowEmailField) && (
+                <EmailField
+                  onSubmitEmail={handleSubmitEmail}
+                  onChangeEmail={handleChangeEmail}
+                  email={email}
+                  emailLoading={emailLoading}
+                  emailProviderConfig={emailProviderConfig}
+                  validEmail={validEmail}
+                  TextFieldProps={{
+                    ...props.EmailFieldProps,
+                    ...emailProviderConfig?.EmailFieldProps,
                   }}
-                  InputProps={{
-                    startAdornment: (
-                      <IconButton
-                        disableRipple
-                        sx={{
-                          cursor: 'unset',
-                        }}
-                      >
-                        <Icon icon="mdi:email-outline" />
-                      </IconButton>
-                    ),
-                    endAdornment: (
-                      <IconButton disabled={!validEmail}>
-                        {emailLoading ? (
-                          <CircularProgress size={theme.spacing(3)} />
-                        ) : (
-                          <Icon icon="mdi:send-outline" />
-                        )}
-                      </IconButton>
-                    ),
-                  }}
-                  placeholder={emailProviderConfig.name || emailProviderConfig.placeholder || 'Email'}
-                  helperText={emailProviderConfig.helperText || 'A sign-in link will be sent to your inbox.'}
-                  {...props.TextFieldProps}
-                  {...emailProviderConfig.TextFieldProps}
                 />
               )}
               {noDivider ? null : <Divider>{dividerText}</Divider>}
