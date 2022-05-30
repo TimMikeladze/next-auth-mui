@@ -260,6 +260,7 @@ export function AuthDialog(props: AuthDialogProps) {
   };
 
   const handleSubmitEmail = async () => {
+    if (emailLoading) return;
     setEmailLoading(true);
     try {
       if (props.onSubmitEmail) {
