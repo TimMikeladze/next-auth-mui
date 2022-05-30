@@ -131,6 +131,10 @@ export type AuthDialogProps = PropsWithChildren<{
    */
   dividerText?: string | React.ReactNode;
   /**
+   * Render error text instead of providers
+   */
+  error?: string,
+  /**
    * Hide the provider icons on their buttons.
    */
   hideProviderIcon?: boolean;

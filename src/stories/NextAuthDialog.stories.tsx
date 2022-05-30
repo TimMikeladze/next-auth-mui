@@ -82,6 +82,21 @@ Custom.parameters = {
   ],
 };
 
+export const Error = Template.bind({});
+
+Error.args = {
+  open: true,
+};
+
+Error.parameters = {
+  mockData: [{
+    url: '/api/auth/providers',
+    method: 'GET',
+    status: 500,
+    response: null,
+  }],
+};
+
 export const AllProviders = Template.bind({});
 
 AllProviders.args = {

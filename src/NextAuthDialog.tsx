@@ -18,7 +18,8 @@ export type NextAuthDialogProps = AuthDialogProps & {
 
 export function NextAuthDialog(props: NextAuthDialogProps) {
   const [loading, setLoading] = React.useState<boolean>(true);
-  const [providers, setSetProviders] = React.useState<Record<string, ProviderConfig>>();
+  const [providers, setProviders] = React.useState<Record<string, ProviderConfig>>();
+  const [error, setError] = React.useState<string>();
 
   useEffect(() => {
     const url = props.url || '/api/auth/providers';
@@ -46,12 +47,12 @@ export function NextAuthDialog(props: NextAuthDialogProps) {
         return acc;
       }, {});
 
-      setSetProviders(filtered);
+      setProviders(filtered);
     };
 
     fetchData()
       .catch((err) => {
-        throw err;
+        setError(`Error loading providers: ${err.message}`);
       })
       .finally(() => setLoading(false));
   }, [props.url, props.disableSortByName]);
@@ -60,6 +61,7 @@ export function NextAuthDialog(props: NextAuthDialogProps) {
     <AuthDialog
       loading={loading}
       providers={providers}
+      error={error}
       {...props}
     />
   );

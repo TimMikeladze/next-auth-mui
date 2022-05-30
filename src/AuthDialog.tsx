@@ -152,6 +152,10 @@ export type AuthDialogProps = PropsWithChildren<{
    */
   dividerText?: string | React.ReactNode;
   /**
+   * Render error text instead of providers
+   */
+  error?: string,
+  /**
    * Hide the provider icons on their buttons.
    */
   hideProviderIcon?: boolean;
@@ -292,7 +296,9 @@ export function AuthDialog(props: AuthDialogProps) {
       >
         {props.loading ? Progress : (
           <>
-            <DialogContentText {...props.DialogContentTextProps} />
+            <DialogContentText {...props.DialogContentTextProps}>
+              {props.error || props.DialogContentProps?.children}
+            </DialogContentText>
             <Stack spacing={2}>
               {props.children}
               {emailProviderConfig && (
