@@ -23,6 +23,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: lts/*
-      - run: npm run deploy-storybook -- --ci --host-token-env-variable=GITHUB_TOKEN
+      - run: npm install
+      - run: npm run deploy-storybook -- --ci
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
