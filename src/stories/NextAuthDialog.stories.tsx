@@ -4,7 +4,7 @@ import withMock from 'storybook-addon-mock';
 
 import { TextField, Typography } from '@mui/material';
 import { action } from '@storybook/addon-actions';
-import { NextAuthDialog } from '..';
+import { isValidEmail, NextAuthDialog } from '..';
 import {
   allProviders, defaultProviders, emailProvider, getMockResponse, oauthProviders,
 } from './mocks';
@@ -104,8 +104,9 @@ CustomEmailSubmit.args = {
   open: true,
   alwaysShowEmailField: true,
   EmailFieldProps: {
-    helperText: 'A custom function will run when email is submitted',
+    helperText: 'A custom function will run on submission plus a custom validator to only allow @gmail.com emails.',
   },
+  isValidEmail: (email) => isValidEmail(email) && email.endsWith('@gmail.com'),
   onSubmitEmail: async (email) => {
     await new Promise((resolve) => {
       setTimeout(resolve, 3000);

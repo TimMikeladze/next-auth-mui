@@ -58,11 +58,17 @@ A common use-case is using a 3rd party email authentication service to send magi
 
 In the example below we're using [magic.link](https://magic.link/) to send emails and a custom credentials provider to authenticate the user.
 
+Additionally, a custom email validator is included to only allow emails that end in `@gmail.com`.
+
 ```tsx
+import NextAuthDialog, { isValidEmail } from 'next-auth-mui';
+
 <NextAuthDialog
   open
   {/* Render email field even if there is no email provider configured */}
   alwaysShowEmailField
+  emailValidator={(email) => isValidEmail(email) && email.endsWith('@gmail.com')}
+  {/* Custom email submit handler */}
   onSubmitEmail={async (email) => {
     // Send magic link
     const didToken = await magic.auth.loginWithMagicLink({ email });
