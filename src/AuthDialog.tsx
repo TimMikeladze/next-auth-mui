@@ -152,6 +152,10 @@ export type AuthDialogProps = PropsWithChildren<{
    */
   breakpoint?: Breakpoint,
   /**
+   * Disable autofocus of email field.
+   */
+  disableEmailAutoFocus?: boolean;
+  /**
    * Text to display between email field and oauth buttons. Defaults to "or".
    */
   dividerText?: string | React.ReactNode;
@@ -208,6 +212,7 @@ export type AuthDialogProps = PropsWithChildren<{
    * Additional sign in options to be passed when calling `signIn`.  See next-auth for documentation
    */
   signInOptions?: SignInOptions;
+
   /**
    * Text to display in the dialog title. Empty by default.
    */
@@ -314,6 +319,7 @@ export function AuthDialog(props: AuthDialogProps) {
                   emailLoading={emailLoading}
                   emailProviderConfig={emailProviderConfig}
                   validEmail={validEmail}
+                  disableAutoFocus={props.disableEmailAutoFocus}
                   TextFieldProps={{
                     ...props.EmailFieldProps,
                     ...emailProviderConfig?.EmailFieldProps,

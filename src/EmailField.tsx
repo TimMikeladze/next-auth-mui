@@ -7,6 +7,7 @@ import { ProviderConfig } from './AuthDialog';
 
 export type EmailFieldProps = {
   TextFieldProps?: TextFieldProps,
+  disableAutoFocus?: boolean,
   email: string;
   emailLoading?: boolean,
   emailProviderConfig?: ProviderConfig,
@@ -22,7 +23,7 @@ export function EmailField(props: EmailFieldProps) {
       required
       fullWidth
       type="email"
-      autoFocus
+      autoFocus={!props.disableAutoFocus}
       value={props.email}
       onChange={(e) => props.onChangeEmail(e)}
       onKeyDown={async (e) => {

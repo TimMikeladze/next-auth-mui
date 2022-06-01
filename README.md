@@ -145,6 +145,10 @@ export type AuthDialogProps = PropsWithChildren<{
    */
   breakpoint?: Breakpoint,
   /**
+   * Disable autofocus of email field.
+   */
+  disableEmailAutoFocus?: boolean;
+  /**
    * Text to display between email field and oauth buttons. Defaults to "or".
    */
   dividerText?: string | React.ReactNode;
