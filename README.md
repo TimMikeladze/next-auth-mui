@@ -167,7 +167,7 @@ export type AuthDialogProps = PropsWithChildren<{
   /**
    * Custom email validation function.
    */
-  isValidEmail?: (email: string) => boolean;
+  isValidEmail?: (email: string) => boolean | Promise<boolean>;
   /**
    * If true a loading indicator will be displayed in the dialog.
    */

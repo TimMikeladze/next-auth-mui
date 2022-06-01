@@ -174,7 +174,7 @@ export type AuthDialogProps = PropsWithChildren<{
   /**
    * Custom email validation function.
    */
-  isValidEmail?: (email: string) => boolean;
+  isValidEmail?: (email: string) => boolean | Promise<boolean>;
   /**
    * If true a loading indicator will be displayed in the dialog.
    */
@@ -216,7 +216,7 @@ export type AuthDialogProps = PropsWithChildren<{
 
 export function isValidEmail(email: string) {
   if (!email) return false;
-  // eslint-disable-next-line no-useless-escape
+  // eslint-disable-next-line no-useless-escape,max-len
   const regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return regex.test(email);
 }
@@ -250,10 +250,10 @@ export function AuthDialog(props: AuthDialogProps) {
     }
   };
 
-  const handleChangeEmail = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+  const handleChangeEmail = async (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setEmail(event.target.value);
     if (props.isValidEmail) {
-      setValidEmail(props.isValidEmail(event.target.value));
+      setValidEmail(await props.isValidEmail(event.target.value));
     } else {
       setValidEmail(isValidEmail(event.target.value));
     }

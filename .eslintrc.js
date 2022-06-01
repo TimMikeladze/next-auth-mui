@@ -28,6 +28,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'no-unused-vars': 'off',
     'no-nested-ternary': 'off',
+    'max-len': ['error', { code: 120 }],
     '@typescript-eslint/no-unused-vars': ['error'],
   },
 };
