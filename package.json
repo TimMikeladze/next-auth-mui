@@ -71,7 +71,7 @@
     "@iconify/react": "3.2.2"
   },
   "devDependencies": {
-    "@babel/core": "7.18.5",
+    "@babel/core": "7.18.13",
     "@commitlint/cli": "17.1.2",
     "@commitlint/config-conventional": "17.1.0",
     "@emotion/react": "11.9.3",
