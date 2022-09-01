@@ -76,7 +76,7 @@
     "@commitlint/config-conventional": "17.1.0",
     "@emotion/react": "11.9.3",
     "@emotion/styled": "11.9.3",
-    "@mui/material": "5.8.4",
+    "@mui/material": "5.10.3",
     "@ryansonshine/commitizen": "4.2.8",
     "@ryansonshine/cz-conventional-changelog": "3.3.4",
     "@storybook/addon-actions": "6.5.9",
