@@ -152,6 +152,14 @@ export type AuthDialogProps = PropsWithChildren<{
    */
   breakpoint?: Breakpoint,
   /**
+   * Content to render at the bottom of the dialog.
+   */
+  childrenBottom?: React.ReactNode;
+  /**
+   * Content to render at the top of the dialog. Alias for `children` to keep backwards compatibility.
+   */
+  childrenTop?: React.ReactNode;
+  /**
    * Disable autofocus of email field.
    */
   disableEmailAutoFocus?: boolean;
@@ -310,7 +318,7 @@ export function AuthDialog(props: AuthDialogProps) {
               {props.error || props.DialogContentProps?.children}
             </DialogContentText>
             <Stack spacing={2}>
-              {props.children}
+              {props.children || props.childrenTop}
               {(emailProviderConfig || props.alwaysShowEmailField) && (
                 <EmailField
                   onSubmitEmail={handleSubmitEmail}
@@ -369,6 +377,7 @@ export function AuthDialog(props: AuthDialogProps) {
                     </Typography>
                   </Button>
                 ))}
+              {props.childrenBottom}
             </Stack>
           </>
         )}

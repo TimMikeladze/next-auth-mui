@@ -70,11 +70,16 @@ Custom.args = {
   children: (
     <>
       <Typography>
-        Some custom fields
+        Some custom fields at the top
       </Typography>
       <TextField type="text" placeholder="Email" fullWidth />
       <TextField type="password" placeholder="Password" fullWidth />
     </>),
+  childrenBottom: (
+    <Typography>
+      Some custom fields at the bottom
+    </Typography>
+  ),
 };
 
 Custom.parameters = {

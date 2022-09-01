@@ -145,6 +145,14 @@ export type AuthDialogProps = PropsWithChildren<{
    */
   breakpoint?: Breakpoint,
   /**
+   * Content to render at the bottom of the dialog.
+   */
+  childrenBottom?: React.ReactNode;
+  /**
+   * Content to render at the top of the dialog. Alias for `children` to keep backwards compatibility.
+   */
+  childrenTop?: React.ReactNode;
+  /**
    * Disable autofocus of email field.
    */
   disableEmailAutoFocus?: boolean;
