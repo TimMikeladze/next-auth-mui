@@ -80,7 +80,7 @@
     }
   },
   "dependencies": {
-    "@iconify/react": "3.2.2"
+    "@iconify/react": "4.1.0"
   },
   "devDependencies": {
     "@babel/core": "7.18.13",
